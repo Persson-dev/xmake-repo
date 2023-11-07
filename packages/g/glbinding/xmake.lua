@@ -7,6 +7,14 @@ package("glbinding")
              "https://github.com/cginternals/glbinding.git")
 
     add_versions("v3.3.0", "a0aa5e67b538649979a71705313fc2b2c3aa49cf9af62a97f7ee9a665fd30564")
+    add_versions("v3.1.0", "6729b260787108462ec6d8954f32a3f11f959ada7eebf1a2a33173b68762849e")
+    add_versions("v3.0.2", "23a383f3ed31af742a4952b6c26faa9c346dd982ba9112c68293a578a6e542ad")
+
+    add_versions("v2.1.4", "cb5971b086c0d217b2304d31368803fd2b8c12ee0d41c280d40d7c23588f8be2")
+    add_versions("v2.1.3", "21e219a5613c7de3668bea3f9577dc925790aaacfa597d9eb523fee2e6fda85c")
+    add_versions("v2.1.2", "e1303f017242c19993ba3d90581a7b1d9c108f0fb36db2be877d0554e1e9ed6f")
+    add_versions("v2.1.1", "cf5f32aa09c3427b0f5c9626fe83aa1473da037d55b6f14f8753b2d9159cc91d")
+    add_versions("v2.0.0", "fd09a469b9bd84e44cd0a33e76fb62413678a926601934b3eb0d8956ba11ec3a")
 
     add_deps("cmake")
 

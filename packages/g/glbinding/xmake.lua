@@ -14,6 +14,7 @@ package("glbinding")
 
     if is_plat("linux") then
         add_extsources("apt::libglbinding-dev")
+        add_deps("glx")
     elseif is_plat("macosx") then
         add_extsources("brew::glbinding")
     end

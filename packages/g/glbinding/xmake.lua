@@ -16,6 +16,12 @@ package("glbinding")
     add_versions("v2.1.1", "cf5f32aa09c3427b0f5c9626fe83aa1473da037d55b6f14f8753b2d9159cc91d")
     add_versions("v2.0.0", "fd09a469b9bd84e44cd0a33e76fb62413678a926601934b3eb0d8956ba11ec3a")
 
+    if is_plat("linux") then
+        add_extsources("apt::libglbinding-dev")
+    elseif is_plat("macosx") then
+        add_extsources("brew::glbinding")
+    end
+
     add_deps("cmake")
 
     on_install(function (package)

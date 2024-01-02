@@ -22,10 +22,10 @@ package("glbinding")
         add_extsources("brew::glbinding")
     end
 
-    add_deps("cmake", "opengl")
+    add_deps("cmake")
 
     on_load(function (package)
-        if package:version():major() < 3 and is_plat("linux") then
+        if package:version():major() < 3 then
             if is_plat("linux") then
                 package:add("deps", "glx")
             elseif is_plat("windows", "mingw") then

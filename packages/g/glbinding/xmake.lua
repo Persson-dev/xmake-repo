@@ -22,7 +22,7 @@ package("glbinding")
         add_extsources("brew::glbinding")
     end
 
-    add_deps("cmake")
+    add_deps("cmake", "khrplatform")
 
     on_load(function (package)
         if package:version():major() < 3 then

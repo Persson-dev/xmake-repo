@@ -13,16 +13,24 @@ package("sqlgen")
     add_deps("cmake", "reflect-cpp")
 
     add_configs("mysql", {description = "Enable MySQL Support", default = false, type = "boolean", readonly = true})
-    add_configs("postgres", {description = "Enable PostgreSQL Support", default = false})
+    add_configs("postgres", {description = "Enable PostgreSQL Support", default = true})
     add_configs("sqlite", {description = "Enable SQLite Support", default = true})
 
     if is_plat("windows") then
         add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
     end
 
-    on_check("windows", function (package)
-        local vs = package:toolchain("msvc"):config("vs")
-        assert(vs and tonumber(vs) >= 2022, "package(reflect-cpp): need vs >= 2022")
+    on_check(function (package)
+        assert(package:check_cxxsnippets({test = [[
+            #include <ranges>
+            #include <source_location>
+            #include <iostream>
+            void test() {
+                constexpr std::string_view message = "Hello, C++20!";
+                for (char c : std::views::filter(message, [](char c) { return std::islower(c); }))
+                    std::cout << std::source_location::current().line() << ": " << c << '\n';
+            }
+        ]]}, {configs = {languages = "c++20"}}), "package(sqlgen) Require at least C++20.")
     end)
 
     on_load(function (package)

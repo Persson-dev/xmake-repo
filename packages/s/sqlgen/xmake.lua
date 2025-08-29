@@ -32,7 +32,7 @@ package("sqlgen")
         end
     end)
 
-    on_check(function (package)
+    on_check("windows", function (package)
         if package:config("postgres") then
             assert(not package:is_arch("arm64"), "package(%s) does not support arm64", package:name())
         end

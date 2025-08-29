@@ -20,6 +20,11 @@ package("sqlgen")
         add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
     end
 
+    on_check("windows", function (package)
+        local vs = package:toolchain("msvc"):config("vs")
+        assert(vs and tonumber(vs) >= 2022, "package(reflect-cpp): need vs >= 2022")
+    end)
+
     on_load(function (package)
         if package:config("mysql") then
             package:add("deps", "mariadb-connector-c")

@@ -13,7 +13,7 @@ package("sqlgen")
     add_deps("cmake", "reflect-cpp")
 
     add_configs("mysql", {description = "Enable MySQL Support", default = false, type = "boolean", readonly = true})
-    add_configs("postgres", {description = "Enable PostgreSQL Support", default = true})
+    add_configs("postgres", {description = "Enable PostgreSQL Support", default = false})
     add_configs("sqlite", {description = "Enable SQLite Support", default = true})
 
     if is_plat("windows") then
@@ -32,13 +32,7 @@ package("sqlgen")
         end
     end)
 
-    on_check("windows", function (package)
-        if package:config("postgres") then
-            assert(not package:is_arch("arm64"), "package(%s) does not support arm64", package:name())
-        end
-    end)
-
-    on_install("windows", "macosx", "linux", "bsd", function (package)
+    on_install(function (package)
         local configs = {
             "-DSQLGEN_USE_VCPKG=OFF",
         }

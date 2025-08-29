@@ -13,7 +13,7 @@ package("sqlgen")
     add_deps("cmake", "reflect-cpp")
 
     add_configs("mysql", {description = "Enable MySQL Support", default = false, type = "boolean", readonly = true})
-    add_configs("postgres", {description = "Enable PostgreSQL Support", default = true})
+    add_configs("postgres", {description = "Enable PostgreSQL Support", default = false})
     add_configs("sqlite", {description = "Enable SQLite Support", default = true})
 
     if is_plat("windows") then

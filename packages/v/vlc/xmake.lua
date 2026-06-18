@@ -22,7 +22,7 @@ package("vlc")
     add_configs("jpeg", {description = "Build with jpeg support", default = true, type = "boolean"})
     add_configs("bpg", {description = "Build with bpg support", default = false, type = "boolean"})
     add_configs("x264", {description = "Build with x264 support", default = true, type = "boolean"})
-    add_configs("x265", {description = "Build with x265 support", default = true, type = "boolean"})
+    add_configs("x265", {description = "Build with x265 support", default = false, type = "boolean"})
 
     -- video
     add_configs("gles2", {description = "Build with OpenGL ES v2 support", default = false, type = "boolean"})

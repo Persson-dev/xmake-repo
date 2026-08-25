@@ -34,6 +34,11 @@ package("sqlgen")
                     std::cout << std::source_location::current().line() << ": " << c << '\n';
             }
         ]]}, {configs = {languages = "c++20"}}), "package(sqlgen) Require at least C++20.")
+
+        if package:config("duckdb") then
+            assert(package:version():ge("0.5.0"), "package(sqlgen) deps(duckdb): only version >= 0.5.0 supports DuckDB")
+            assert(package:is_plat("linux", "macosx"), "package(sqlgen) deps(duckdb): only supports macOS and Linux")
+        end
     end)
 
     on_load(function (package)
@@ -48,16 +53,6 @@ package("sqlgen")
         end
         if package:config("duckdb") then
             package:add("deps", "duckdb >=1.4.2")
-        end
-    end)
-
-    on_check(function (package)
-        if package:config("postgres") then
-            assert(not package:is_arch("arm64"), "package(sqlgen) deps(libpq): does not support arm64")
-        end
-        if package:config("duckdb") then
-            assert(package:version():ge("0.5.0"), "package(sqlgen) deps(duckdb): only version >= 0.5.0 supports DuckDB")
-            assert(package:is_plat("linux", "macosx"), "package(sqlgen) deps(duckdb): only supports macOS and Linux")
         end
     end)
 

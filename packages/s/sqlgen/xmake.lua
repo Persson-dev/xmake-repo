@@ -17,11 +17,33 @@ package("sqlgen")
     add_configs("mysql", {description = "Enable MySQL Support", default = false, type = "boolean", readonly = true})
     add_configs("postgres", {description = "Enable PostgreSQL Support", default = true, type = "boolean"})
     add_configs("sqlite", {description = "Enable SQLite Support", default = true, type = "boolean"})
-    add_configs("duckdb", {description = "Enable DuckDB Support", default = true, type = "boolean"})
+    add_configs("duckdb", {description = "Enable DuckDB Support", default = false, type = "boolean"})
 
     if is_plat("windows") then
         add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
     end
+
+    on_check(function (package)
+        assert(package:check_cxxsnippets({test = [[
+            #include <ranges>
+            #include <source_location>
+            #include <iostream>
+            void test() {
+                constexpr std::string_view message = "Hello, C++20!";
+                for (char c : std::views::filter(message, [](char c) { return std::islower(c); }))
+                    std::cout << std::source_location::current().line() << ": " << c << '\n';
+            }
+        ]]}, {configs = {languages = "c++20"}}), "package(sqlgen) Require at least C++20.")
+
+        if package:config("postgres") and is_plat("windows") then
+            assert(not package:is_arch("arm64"), "package(sqlgen) deps(libpq): does not support arm64")
+        end
+
+        if package:config("duckdb") then
+            assert(package:version():ge("0.5.0"), "package(sqlgen) deps(duckdb): only version >= 0.5.0 supports DuckDB")
+            assert(package:is_plat("linux", "macosx"), "package(sqlgen) deps(duckdb): only supports macOS and Linux")
+        end
+    end)
 
     on_load(function (package)
         if package:config("mysql") then
@@ -35,16 +57,6 @@ package("sqlgen")
         end
         if package:config("duckdb") then
             package:add("deps", "duckdb >=1.4.2")
-        end
-    end)
-
-    on_check(function (package)
-        if package:config("postgres") then
-            assert(not package:is_arch("arm64"), "package(sqlgen) deps(libpq): does not support arm64")
-        end
-        if package:config("duckdb") then
-            assert(package:version():ge("0.5.0"), "package(sqlgen) deps(duckdb): only version >= 0.5.0 supports DuckDB")
-            assert(package:is_plat("linux", "macosx"), "package(sqlgen) deps(duckdb): only supports macOS and Linux")
         end
     end)
 

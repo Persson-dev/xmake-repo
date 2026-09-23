@@ -33,6 +33,10 @@ package("nam-core")
                 if has_config("a2_fast") then
                     add_defines("NAM_ENABLE_A2_FAST")
                 end
+
+                if is_plat("windows") and is_kind("shared") then
+                    add_rules("utils.symbols.export_all", {export_classes = true})
+                end
         ]])
         os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")
         import("package.tools.xmake").install(package, {a2_fast = package:config("a2_fast")})

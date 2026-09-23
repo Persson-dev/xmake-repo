@@ -25,7 +25,7 @@ package("nam-core")
 
             target("NAM")
                 add_files("NAM/**.cpp")
-                add_includedirs("NAM")
+                add_includedirs("NAM", {public = true})
                 add_headerfiles("(NAM/**.h)", "(NAM/**.hpp)")
                 set_kind("$(kind)")
 

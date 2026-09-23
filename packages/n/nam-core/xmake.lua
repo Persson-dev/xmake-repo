@@ -7,7 +7,6 @@ package("nam-core")
              "https://github.com/sdatkinson/NeuralAmpModelerCore.git")
 
     add_versions("v0.5.4", "3fd9d82851660fab3f12f3baceb94ec5ed017ff5a85ca6e66a9f6b0a81332c3f")
-    add_versions("2026.02.24", "20a04fcf466dc4233730412b120e5bbad72402c3")
 
     add_configs("a2_fast", {description = "Build the A2 fast-path WaveNet.", default = true, type = "boolean"})
 
@@ -22,6 +21,8 @@ package("nam-core")
 
             option("a2_fast", {default = false})
 
+            set_languages("c++17")
+
             target("NAM")
                 add_files("NAM/**.cpp")
                 add_includedirs("NAM")
@@ -31,11 +32,18 @@ package("nam-core")
                 if has_config("a2_fast") then
                     add_defines("NAM_ENABLE_A2_FAST")
                 end
+
+                if is_plat("windows") then
+                    add_defines("NOMINMAX", "WIN32_LEAN_AND_MEAN")
+                    if is_kind("shared") then
+                        add_rules("utils.symbols.export_all", {export_classes = true})
+                    end
+                end
         ]])
         os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")
         import("package.tools.xmake").install(package, {a2_fast = package:config("a2_fast")})
     end)
 
     on_test(function (package)
-        assert(package:has_cxxfuncs("nam::verify_config_version(\"\")", {includes = "NAM/dsp.h"}))
+        assert(package:has_cxxfuncs("nam::verify_config_version(\"\")", {includes = "NAM/dsp.h", configs = {languages = "c++17"}}))
     end)

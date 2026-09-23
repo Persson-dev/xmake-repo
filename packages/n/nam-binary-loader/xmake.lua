@@ -15,8 +15,8 @@ package("nam-binary-loader")
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
 
-            add_requires("nam-core", "eigen", "nlohmann_json")
-            add_packages("nam-core", "eigen", "nlohmann_json")
+            add_requires("nam-core")
+            add_packages("nam-core")
 
             target("NamBinaryLoader")
                 add_files("namb/**.cpp")
@@ -24,7 +24,6 @@ package("nam-binary-loader")
                 add_headerfiles("(namb/**.h)", "(namb/**.hpp)")
                 set_kind("$(kind)")
         ]])
-        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "namb")
         import("package.tools.xmake").install(package)
     end)
 

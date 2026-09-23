@@ -1,0 +1,41 @@
+package("nam-core")
+    set_homepage("https://github.com/sdatkinson/NeuralAmpModelerCore")
+    set_description("Core DSP library for NAM plugins")
+    set_license("MIT")
+
+    add_urls("https://github.com/sdatkinson/NeuralAmpModelerCore/archive/refs/tags/$(version).tar.gz",
+             "https://github.com/sdatkinson/NeuralAmpModelerCore.git")
+
+    add_versions("v0.5.4", "3fd9d82851660fab3f12f3baceb94ec5ed017ff5a85ca6e66a9f6b0a81332c3f")
+    add_versions("2026.02.24", "20a04fcf466dc4233730412b120e5bbad72402c3")
+
+    add_configs("a2_fast", {description = "Build the A2 fast-path WaveNet.", default = true, type = "boolean"})
+
+    add_deps("eigen", "nlohmann_json")
+
+    on_install(function (package)
+        io.writefile("xmake.lua", [[
+            add_rules("mode.debug", "mode.release")
+
+            add_requires("eigen", "nlohmann_json")
+            add_packages("eigen", "nlohmann_json")
+
+            option("a2_fast", {default = false})
+
+            target("NAM")
+                add_files("NAM/**.cpp")
+                add_includedirs("NAM")
+                add_headerfiles("(NAM/**.h)", "(NAM/**.hpp)")
+                set_kind("$(kind)")
+
+                if has_config("a2_fast") then
+                    add_defines("NAM_ENABLE_A2_FAST")
+                end
+        ]])
+        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")
+        import("package.tools.xmake").install(package, {a2_fast = package:config("a2_fast")})
+    end)
+
+    on_test(function (package)
+        assert(package:has_cxxfuncs("nam::verify_config_version(\"\")", {includes = "NAM/dsp.h"}))
+    end)

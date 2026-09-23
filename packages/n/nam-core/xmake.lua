@@ -12,7 +12,7 @@ package("nam-core")
 
     add_deps("eigen", "nlohmann_json")
 
-    on_install(function (package)
+    on_install("!bsd", function (package)
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
 

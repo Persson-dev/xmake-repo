@@ -14,7 +14,7 @@ package("nam-core")
     add_deps("eigen", "nlohmann_json")
 
     on_check("windows", function (package)
-        assert(package:version() != "2026.02.24", "Version 2026.02.24 is not supported on Windows")
+        assert(not (package:version() == "2026.02.24"), "Version 2026.02.24 is not supported on Windows")
     end)
 
     on_install(function (package)

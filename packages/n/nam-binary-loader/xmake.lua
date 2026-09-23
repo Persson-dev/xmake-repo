@@ -18,6 +18,8 @@ package("nam-binary-loader")
             add_requires("nam-core")
             add_packages("nam-core")
 
+            set_languages("c++17")
+
             target("NamBinaryLoader")
                 add_files("namb/**.cpp")
                 add_includedirs("namb")
@@ -28,5 +30,5 @@ package("nam-binary-loader")
     end)
 
     on_test(function (package)
-        assert(package:has_cxxfuncs("nam::get_dsp_namb(\"\")", {includes = "namb/get_dsp_namb.h"}))
+        assert(package:has_cxxfuncs("nam::get_dsp_namb(\"\")", {includes = "namb/get_dsp_namb.h", configs = {languages = "c++17"}}))
     end)

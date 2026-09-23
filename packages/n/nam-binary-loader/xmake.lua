@@ -11,7 +11,7 @@ package("nam-binary-loader")
 
     add_deps("nam-core")
 
-    on_install(function (package)
+    on_install("!bsd", function (package)
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
 

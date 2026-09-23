@@ -22,6 +22,8 @@ package("nam-core")
 
             option("a2_fast", {default = false})
 
+            set_languages("c++17")
+
             target("NAM")
                 add_files("NAM/**.cpp")
                 add_includedirs("NAM")
@@ -37,5 +39,5 @@ package("nam-core")
     end)
 
     on_test(function (package)
-        assert(package:has_cxxfuncs("nam::verify_config_version(\"\")", {includes = "NAM/dsp.h"}))
+        assert(package:has_cxxfuncs("nam::verify_config_version(\"\")", {includes = "NAM/dsp.h", configs = {languages = "c++17"}}))
     end)

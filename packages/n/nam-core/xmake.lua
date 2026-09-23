@@ -7,15 +7,10 @@ package("nam-core")
              "https://github.com/sdatkinson/NeuralAmpModelerCore.git")
 
     add_versions("v0.5.4", "3fd9d82851660fab3f12f3baceb94ec5ed017ff5a85ca6e66a9f6b0a81332c3f")
-    add_versions("2026.02.24", "20a04fcf466dc4233730412b120e5bbad72402c3")
 
     add_configs("a2_fast", {description = "Build the A2 fast-path WaveNet.", default = true, type = "boolean"})
 
     add_deps("eigen", "nlohmann_json")
-
-    on_check("windows", function (package)
-        assert(not (package:version() == "2026.02.24"), "Version 2026.02.24 is not supported on Windows")
-    end)
 
     on_install(function (package)
         io.writefile("xmake.lua", [[

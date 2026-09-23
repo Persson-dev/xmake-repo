@@ -36,7 +36,7 @@ package("nam-core")
 
                 if is_plat("windows") then
                     add_defines("NOMINMAX", "WIN32_LEAN_AND_MEAN")
-                    if and is_kind("shared") then
+                    if is_kind("shared") then
                         add_rules("utils.symbols.export_all", {export_classes = true})
                     end
                 end

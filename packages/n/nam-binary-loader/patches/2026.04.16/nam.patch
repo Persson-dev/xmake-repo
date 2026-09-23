@@ -1,0 +1,13 @@
+diff --git a/namb/get_dsp_namb.cpp b/namb/get_dsp_namb.cpp
+index 8247a83..12a8c21 100644
+--- a/namb/get_dsp_namb.cpp
++++ b/namb/get_dsp_namb.cpp
+@@ -13,7 +13,7 @@
+ #include <NAM/dsp.h>
+ #include <NAM/lstm.h>
+ #include <NAM/model_config.h>
+-#include <NAM/wavenet.h>
++#include <NAM/wavenet/model.h>
+ #include "binary_parser_registry.h"
+ #include "namb_format.h"
+ 

@@ -5,9 +5,11 @@ package("nam-binary-loader")
 
     add_urls("https://github.com/tone-3000/nam-binary-loader.git")
 
-    add_versions("2026.02.26", "5aaaa61b1f07cc5ac17c4562a6f971b4ba0ee576")
+    add_versions("2026.04.16", "92c9e85bb7903ccbfd3264d3f7bcb5fee6c0892d")
 
-    add_deps("nam-core 2026.02.24")
+    add_patches("2026.04.16", path.join(os.scriptdir(), "patches", "2026.04.16", "nam.patch"), "b9bd21e4e95e8127247ec0990efc3ad0b74c624ec8b0da0aa10751f710eba7be")
+
+    add_deps("nam-core")
 
     on_install(function (package)
         io.writefile("xmake.lua", [[
@@ -22,6 +24,7 @@ package("nam-binary-loader")
                 add_headerfiles("(namb/**.h)", "(namb/**.hpp)")
                 set_kind("$(kind)")
         ]])
+        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "namb")
         import("package.tools.xmake").install(package)
     end)
 

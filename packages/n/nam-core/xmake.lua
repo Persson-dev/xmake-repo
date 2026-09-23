@@ -34,8 +34,11 @@ package("nam-core")
                     add_defines("NAM_ENABLE_A2_FAST")
                 end
 
-                if is_plat("windows") and is_kind("shared") then
-                    add_rules("utils.symbols.export_all", {export_classes = true})
+                if is_plat("windows") then
+                    add_defines("NOMINMAX", "WIN32_LEAN_AND_MEAN")
+                    if and is_kind("shared") then
+                        add_rules("utils.symbols.export_all", {export_classes = true})
+                    end
                 end
         ]])
         os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")

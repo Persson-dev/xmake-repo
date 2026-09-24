@@ -41,7 +41,7 @@ package("nam-core")
                 end
         ]])
         os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")
-        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM", "wavenet")
+        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), path.join("NAM", "wavenet"))
         import("package.tools.xmake").install(package, {a2_fast = package:config("a2_fast")})
     end)
 

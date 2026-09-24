@@ -25,6 +25,13 @@ package("nam-binary-loader")
                 add_includedirs("namb")
                 add_headerfiles("(namb/**.h)", "(namb/**.hpp)")
                 set_kind("$(kind)")
+
+                if is_plat("windows") then
+                    add_defines("NOMINMAX", "WIN32_LEAN_AND_MEAN")
+                    if is_kind("shared") then
+                        add_rules("utils.symbols.export_all", {export_classes = true})
+                    end
+                end
         ]])
         import("package.tools.xmake").install(package)
     end)

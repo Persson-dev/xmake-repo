@@ -32,7 +32,7 @@ package("gecode")
         end
     end)
 
-    on_install(function (package)
+    on_install("linux", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

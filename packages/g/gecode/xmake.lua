@@ -59,5 +59,5 @@ package("gecode")
               opt.size(0);
               opt.parse(argc, argv);
             }
-        ]]}))
+        ]]}, {configs = {languages = "c++17"}))
     end)

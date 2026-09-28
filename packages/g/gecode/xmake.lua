@@ -26,6 +26,12 @@ package("gecode")
     add_configs("gcc_visibility", {description = "Enable GCC visibility attributes", type = "boolean", default = true})
     add_configs("osx_unfair_mutex", {description = "Enable macOS unfair mutexes", type = "boolean", default = true})
 
+    on_load(function(package)
+        if package:config("mpfr") then
+            package:add("deps", "mpfr")
+        end
+    end)
+
     on_install(function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")

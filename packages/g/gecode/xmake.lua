@@ -5,7 +5,7 @@ package("gecode")
     add_urls("https://github.com/Gecode/gecode/archive/refs/tags/$(version).tar.gz",
              "https://github.com/Gecode/gecode.git")
 
-    add_versions("release-6.4.0", "4cc0e4f440f821a643e637801094cd42ccb5946caf5248c905f29f5f3a16f260")
+    add_versions("6.4.0", "4cc0e4f440f821a643e637801094cd42ccb5946caf5248c905f29f5f3a16f260")
 
     add_deps("cmake")
 

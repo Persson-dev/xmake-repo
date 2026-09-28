@@ -39,6 +39,10 @@ package("gecode")
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:is_debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
 
+        if package:is_plat("windows") then
+            table.insert(configs, "-DCMAKE_CXX_FLAGS=/bigobj")
+        end
+
         for name, enabled in table.orderpairs(package:configs()) do
             if not package:extraconf("configs", name, "builtin") then
                 table.insert(configs, "-DGECODE_ENABLE_" .. string.upper(name) .. "=" .. (enabled and "ON" or "OFF"))

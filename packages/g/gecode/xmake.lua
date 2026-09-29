@@ -31,8 +31,7 @@ package("gecode")
             package:add("deps", "mpfr")
         end
         --  libgecodeflatzinc.a  libgecodedriver.a  libgecodeminimodel.a  libgecodeset.a  libgecodefloat.a  D:/a/_temp/msys64/mingw64/lib/libmpfr.dll.a  D:/a/_temp/msys64/mingw64/lib/libgmp.dll.a  libgecodeint.a  libgecodesearch.a  libgecodekernel.a  libgecodesupport.a
-        package:add("linkorders", "gecodeflatzinc", "gecodedriver", "gecodeminimodel", "gecodeset", "gecodefloat", "gecodeint", "gecodesearch", "gecodekernel","gecodesupport")
-    end)
+        package:add("linkorders", "gecodedriver", "gecodekernel","gecodesupport")
 
     on_install(function (package)
         local configs = {}

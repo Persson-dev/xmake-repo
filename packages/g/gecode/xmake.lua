@@ -35,7 +35,7 @@ package("gecode")
         package:add("linkorders", "gecodeint", "gecodesupport")
     end)
 
-    on_install("linux", "cross", "windows|x64", "android", function (package)
+    on_install("linux", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

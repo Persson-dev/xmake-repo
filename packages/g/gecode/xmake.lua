@@ -30,10 +30,10 @@ package("gecode")
         if package:config("mpfr") then
             package:add("deps", "mpfr")
         end
-        --  libgecodeflatzinc.a  libgecodedriver.a  libgecodeminimodel.a  libgecodeset.a  libgecodefloat.a  D:/a/_temp/msys64/mingw64/lib/libmpfr.dll.a  D:/a/_temp/msys64/mingw64/lib/libgmp.dll.a  libgecodeint.a  libgecodesearch.a  libgecodekernel.a  libgecodesupport.a
-        package:add("linkorders", "gecodedriver", "gecodekernel","gecodesupport")
+        package:add("linkorders", "gecodedriver", "gecodekernel", "gecodesupport")
+    end)
 
-    on_install(function (package)
+    on_install("!wasm", "!windows|arm64", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

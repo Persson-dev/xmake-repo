@@ -30,7 +30,7 @@ package("gecode")
         if package:config("mpfr") then
             package:add("deps", "mpfr")
         end
-        package:add("linkorders", "gecodeset", "gecodeminimodel", "gecodesearch", "gecodekernel", "gecodeflatzinc", "gecodeint", "gecodefloat", "gecodesupport", "gecodedriver", "mpfr", "gmp")
+        package:add("linkorders", "gecodeset", "gecodeminimodel", "gecodesearch", "gecodekernel", "gecodeflatzinc", "gecodesupport", "gecodeint", "gecodefloat", "gecodedriver", "mpfr", "gmp")
         -- package:add("linkorders", "gecodesupport", "gecodeint", "gecodeflatzinc", "gecodedriver", "gecodekernel", "gecodesearch", "gecodeminimodel", "gecodefloat", "gecodeset", "mpfr", "gmp")
     end)
 

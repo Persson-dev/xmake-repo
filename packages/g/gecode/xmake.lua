@@ -35,6 +35,7 @@ package("gecode")
         package:add("linkorders", "gecodeint", "gecodesupport")
         package:add("linkorders", "gecodeset", "gecodesupport")
         package:add("linkorders", "gecodeflatzinc", "gecodeset")
+        package:add("linkorders", "gecodeflatzinc", "gecodesupport")
     end)
 
     on_install("linux", "windows|!arm*", "cross", "android", function (package)

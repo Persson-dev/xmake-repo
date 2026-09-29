@@ -19,7 +19,7 @@ package("gecode")
     add_configs("minimodel", {description = "Build minimodel module", type = "boolean", default = true})
     add_configs("driver", {description = "Build driver module", type = "boolean", default = true})
     add_configs("flatzinc", {description = "Build FlatZinc module", type = "boolean", default = true})
-    add_configs("mpfr", {description = "Enable MPFR support", type = "boolean", default = true})
+    add_configs("mpfr", {description = "Enable MPFR support", type = "boolean", default = is_plat("linux")})
     add_configs("allocator", {description = "Enable default allocator", type = "boolean", default = true})
     add_configs("audit", {description = "Enable audit code", type = "boolean", default = false})
     add_configs("fault_injection", {description = "Enable deterministic test-only failpoints", type = "boolean", default = false})
@@ -30,7 +30,7 @@ package("gecode")
         if package:config("mpfr") then
             package:add("deps", "mpfr")
         end
-        package:add("linkorders", "gecodekernel", "gecodesupport", "gecodedriver")
+        package:add("linkorders", "gecodekernel", "gecodedriver", "gecodesupport")
     end)
 
     on_install(function (package)

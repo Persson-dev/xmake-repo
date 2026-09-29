@@ -32,6 +32,7 @@ package("gecode")
         end
         package:add("linkorders", "gecodekernel", "gecodesupport")
         package:add("linkorders", "gecodedriver", "gecodekernel")
+        package:add("linkorders", "gecodedriver", "gecodesupport")
         package:add("linkorders", "gecodeint", "gecodesupport")
         package:add("linkorders", "gecodeset", "gecodesupport")
         package:add("linkorders", "gecodeflatzinc", "gecodeset")

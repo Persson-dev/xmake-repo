@@ -32,6 +32,7 @@ package("gecode")
         end
         package:add("linkorders", "gecodekernel", "gecodesupport")
         package:add("linkorders", "gecodedriver", "gecodekernel")
+        package:add("linkorders", "gecodeint", "gecodesupport")
     end)
 
     on_install("linux", "cross", "windows|x64", "android", function (package)

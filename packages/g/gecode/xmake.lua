@@ -33,6 +33,8 @@ package("gecode")
         package:add("linkorders", "gecodekernel", "gecodesupport")
         package:add("linkorders", "gecodedriver", "gecodekernel")
         package:add("linkorders", "gecodeint", "gecodesupport")
+        package:add("linkorders", "gecodeset", "gecodesupport")
+        package:add("linkorders", "gecodeflatzinc", "gecodeset")
     end)
 
     on_install("linux", function (package)

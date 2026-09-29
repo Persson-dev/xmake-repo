@@ -33,7 +33,7 @@ package("gecode")
         package:add("linkorders", "gecodekernel", "gecodesupport", "gecodedriver")
     end)
 
-    on_install("linux", function (package)
+    on_install("!wasm", "!iphoneos", "!macosx", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

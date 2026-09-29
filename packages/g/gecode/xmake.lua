@@ -30,10 +30,11 @@ package("gecode")
         if package:config("mpfr") then
             package:add("deps", "mpfr")
         end
-        package:add("linkorders", "gecodedriver", "gecodekernel", "gecodesupport")
+        package:add("linkorders", "gecodekernel", "gecodesupport")
+        package:add("linkorders", "gecodedriver", "gecodekernel")
     end)
 
-    on_install("!wasm", "!windows|arm64", function (package)
+    on_install("!wasm", "!windows|arm64", "!macos", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

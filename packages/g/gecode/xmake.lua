@@ -31,12 +31,9 @@ package("gecode")
             package:add("deps", "mpfr")
         end
         package:add("linkorders", "gecodekernel", "gecodesupport", "gecodedriver")
-        -- package:add("linkorders", "gecodesupport", "gecodeint", "gecodeflatzinc", "gecodekernel", "gecodesearch", "gecodeminimodel", "gecodefloat", "gecodeset", "gecodedriver", "mpfr", "gmp")
-        -- package:add("linkorders", "gecodeset", "gecodeminimodel", "gecodesearch", "gecodekernel", "gecodeflatzinc", "gecodesupport", "gecodeint", "gecodefloat", "gecodedriver", "mpfr", "gmp")
-        -- package:add("linkorders", "gecodesupport", "gecodeint", "gecodeflatzinc", "gecodedriver", "gecodekernel", "gecodesearch", "gecodeminimodel", "gecodefloat", "gecodeset", "mpfr", "gmp")
     end)
 
-    on_install("linux", function (package)
+    on_install(function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

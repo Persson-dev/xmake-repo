@@ -34,7 +34,7 @@ package("gecode")
         package:add("linkorders", "gecodedriver", "gecodekernel")
     end)
 
-    on_install("!wasm", "!windows|arm64", "!macosx", function (package)
+    on_install("linux", "cross", "windows|x64", "android", function (package)
         local configs = {}
         table.insert(configs, "-DGECODE_INSTALL=ON")
         table.insert(configs, "-DGECODE_ENABLE_EXAMPLES=OFF")

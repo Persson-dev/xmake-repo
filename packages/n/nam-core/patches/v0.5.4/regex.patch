@@ -1,5 +1,5 @@
 diff --git a/NAM/get_dsp.cpp b/NAM/get_dsp.cpp
-index 6439364..fe8ef62 100644
+index 6439364..1e6b998 100644
 --- a/NAM/get_dsp.cpp
 +++ b/NAM/get_dsp.cpp
 @@ -1,7 +1,6 @@
@@ -21,14 +21,15 @@ index 6439364..fe8ef62 100644
  namespace nam
  {
  namespace
-@@ -21,8 +24,8 @@ class CoreVersionSupportChecker : public IVersionSupportChecker
+@@ -21,8 +24,9 @@ class CoreVersionSupportChecker : public IVersionSupportChecker
  public:
    Supported support(const std::string& version) const override
    {
 -    static const std::regex semver_regex(R"(^\d+\.\d+\.\d+$)");
 -    if (!std::regex_match(version, semver_regex))
-+    static const auto semver_regex = R"(^\d+\.\d+\.\d+$)"_ctre;
-+    if (!semver_regex.match(version))
++    static constexpr auto pattern = ctll::fixed_string{ R"(^\d+\.\d+\.\d+$)" };
++    static const auto semver_regex = ctre::match<pattern>;
++    if (!semver_regex(version))
        return Supported::NO;
  
      const Version parsed = ParseVersion(version);

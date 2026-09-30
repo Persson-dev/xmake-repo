@@ -25,7 +25,7 @@ index 6439364..11a36fa 100644
    {
 -    static const std::regex semver_regex(R"(^\d+\.\d+\.\d+$)");
 -    if (!std::regex_match(version, semver_regex))
-+    static constexpr auto semver_regex = ctre::match<R"(^\d+\.\d+\.\d+$)">;
++    static constexpr auto semver_regex = ctre::match<R"(\d+\.\d+\.\d+)">;
 +    if (!semver_regex(version))
        return Supported::NO;
  

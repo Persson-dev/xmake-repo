@@ -10,9 +10,11 @@ package("nam-core")
 
     add_configs("a2_fast", {description = "Build the A2 fast-path WaveNet.", default = true, type = "boolean"})
 
+    add_patches("v0.5.4", "eaa0d49698f03cedd14efd21fa1f91d80600721e5685ec2062a85fa3a457597a")
+
     add_deps("eigen", "nlohmann_json")
 
-    on_install(function (package)
+    on_install("!bsd", function (package)
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
 
@@ -25,7 +27,7 @@ package("nam-core")
 
             target("NAM")
                 add_files("NAM/**.cpp")
-                add_includedirs("NAM")
+                add_includedirs("NAM", {public = true})
                 add_headerfiles("(NAM/**.h)", "(NAM/**.hpp)")
                 set_kind("$(kind)")
 
@@ -40,7 +42,8 @@ package("nam-core")
                     end
                 end
         ]])
-        os.cp(package:dep("nlohmann_json"):installdir("include", "nlohmann", "json.hpp"), "NAM")
+        io.writefile(path.join("NAM", "json.hpp"), "#include <nlohmann/json.hpp>")
+        io.writefile(path.join("NAM", "wavenet", "json.hpp"), "#include <nlohmann/json.hpp>")
         import("package.tools.xmake").install(package, {a2_fast = package:config("a2_fast")})
     end)
 

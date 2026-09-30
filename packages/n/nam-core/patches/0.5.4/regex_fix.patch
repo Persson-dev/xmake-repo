@@ -1,0 +1,23 @@
+diff --git a/NAM/get_dsp.cpp b/NAM/get_dsp.cpp
+index 4e205e3..46f0e82 100644
+--- a/NAM/get_dsp.cpp
++++ b/NAM/get_dsp.cpp
+@@ -12,6 +12,7 @@
+ #include "get_dsp.h"
+ #include "model_config.h"
+ #include "wav.h"
++#include <ctre/ctre.hpp>
+ 
+ namespace nam
+ {
+@@ -23,8 +24,8 @@ class CoreVersionSupportChecker : public IVersionSupportChecker
+ public:
+   Supported support(const std::string& version) const override
+   {
+-    static const std::regex semver_regex(R"(^\d+\.\d+\.\d+$)");
+-    if (!std::regex_match(version, semver_regex))
++    static const auto semver_regex = ctre::match<R"(^\d+\.\d+\.\d+$)">;
++    if (!semver_regex(version))
+       return Supported::NO;
+ 
+     const Version parsed = ParseVersion(version);

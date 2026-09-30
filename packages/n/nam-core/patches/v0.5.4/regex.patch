@@ -1,5 +1,5 @@
 diff --git a/NAM/get_dsp.cpp b/NAM/get_dsp.cpp
-index 6439364..f62d07e 100644
+index 6439364..11a36fa 100644
 --- a/NAM/get_dsp.cpp
 +++ b/NAM/get_dsp.cpp
 @@ -1,7 +1,6 @@
@@ -14,7 +14,7 @@ index 6439364..f62d07e 100644
  #include "get_dsp.h"
  #include "model_config.h"
  
-+#include <ctre/ctre.hpp>
++#include <ctre.hpp>
 +
  namespace nam
  {

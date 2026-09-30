@@ -10,7 +10,7 @@ package("nam-core")
 
     add_configs("a2_fast", {description = "Build the A2 fast-path WaveNet.", default = true, type = "boolean"})
 
-    add_patches("v0.5.4", "patches/v0.5.4/regex.patch", "f4ac74ed2381581bac2ea9732c8d1de95b08ad2e3364fc7fa2bb6827e9f406b7")
+    add_patches("v0.5.4", "patches/v0.5.4/regex.patch", "b5ec24c0cc13498ed62c64595a90a55206616cef46ad13f01d33da1cc5bcb2f8")
 
     add_deps("eigen", "nlohmann_json", "ctre")
 

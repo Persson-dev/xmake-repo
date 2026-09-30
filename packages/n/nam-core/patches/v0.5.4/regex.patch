@@ -1,5 +1,5 @@
 diff --git a/NAM/get_dsp.cpp b/NAM/get_dsp.cpp
-index 6439364..11a36fa 100644
+index 6439364..fe8ef62 100644
 --- a/NAM/get_dsp.cpp
 +++ b/NAM/get_dsp.cpp
 @@ -1,7 +1,6 @@
@@ -10,23 +10,25 @@ index 6439364..11a36fa 100644
  #include <sstream>
  #include <stdexcept>
  
-@@ -11,6 +10,8 @@
+@@ -11,6 +10,10 @@
  #include "get_dsp.h"
  #include "model_config.h"
  
 +#include <ctre.hpp>
 +
++using namespace ctre::literals;
++
  namespace nam
  {
  namespace
-@@ -21,8 +22,8 @@ class CoreVersionSupportChecker : public IVersionSupportChecker
+@@ -21,8 +24,8 @@ class CoreVersionSupportChecker : public IVersionSupportChecker
  public:
    Supported support(const std::string& version) const override
    {
 -    static const std::regex semver_regex(R"(^\d+\.\d+\.\d+$)");
 -    if (!std::regex_match(version, semver_regex))
-+    static constexpr auto semver_regex = ctre::match<R"(\d+\.\d+\.\d+)">;
-+    if (!semver_regex(version))
++    static const auto semver_regex = R"(^\d+\.\d+\.\d+$)"_ctre;
++    if (!semver_regex.match(version))
        return Supported::NO;
  
      const Version parsed = ParseVersion(version);

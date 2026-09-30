@@ -12,14 +12,14 @@ package("nam-core")
 
     add_patches("v0.5.4", "patches/v0.5.4/regex.patch", "f4ac74ed2381581bac2ea9732c8d1de95b08ad2e3364fc7fa2bb6827e9f406b7")
 
-    add_deps("eigen", "nlohmann_json")
+    add_deps("eigen", "nlohmann_json", "ctre")
 
     on_install("!bsd", function (package)
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
 
-            add_requires("eigen", "nlohmann_json")
-            add_packages("eigen", "nlohmann_json")
+            add_requires("eigen", "nlohmann_json", "ctre")
+            add_packages("eigen", "nlohmann_json", "ctre")
 
             option("a2_fast", {default = false})
 

@@ -26,16 +26,23 @@ package("reflect-cpp")
     add_patches("0.11.1", "patches/0.11.1/cmake.patch", "a43ae2c6de455054ab860adfb309da7bd376c31c493c8bab0ebe07aae0805205")
     add_patches("0.10.0", "patches/0.10.0/cmake.patch", "b8929c0a13bd4045cbdeea0127e08a784e2dc8c43209ca9f056fff4a3ab5c4d3")
 
+    add_configs("avro", {description = "Enable Avro Support.", default = false, type = "boolean", readonly = true})
+    add_configs("boost-serialization", {description = "Enable Boost.Serialization support.", default = false, type = "boolean", readonly = true})
     add_configs("bson", {description = "Enable Bson Support.", default = false, type = "boolean", readonly = true})
-    add_configs("yyjson", {description = "Enable yyjson Support.", default = true, type = "boolean"})
-    add_configs("cbor", {description = "Enable Cbor Support.", default = false, type = "boolean"})
+    add_configs("cbor", {description = "Enable Cbor Support.", default = true, type = "boolean"})
     add_configs("capnproto", {description = "Enable Capnproto Support.", default = false, type = "boolean"})
-    add_configs("flatbuffers", {description = "Enable Flexbuffers Support.", default = false, type = "boolean"})
-    add_configs("msgpack", {description = "Enable Msgpack Support.", default = false, type = "boolean"})
-    add_configs("xml", {description = "Enable Xml Support.", default = false, type = "boolean"})
-    add_configs("toml", {description = "Enable Toml Support.", default = false, type = "boolean"})
-    add_configs("yaml", {description = "Enable Yaml Support.", default = false, type = "boolean"})
-    add_configs("ubjson", {description = "Enable UBJSON Support.", default = false, type = "boolean"})
+    add_configs("cereal", {description = "Enable Cereal Support.", default = true, type = "boolean"})
+    add_configs("csv", {description = "Enable CSV Support.", default = true, type = "boolean"})
+    add_configs("flatbuffers", {description = "Enable Flexbuffers Support.", default = true, type = "boolean"})
+    add_configs("msgpack", {description = "Enable Msgpack Support.", default = true, type = "boolean"})
+    add_configs("parquet", {description = "Enable parquet Support.", default = false, type = "boolean", readonly = true})
+    add_configs("toml", {description = "Enable Toml Support.", default = true, type = "boolean"})
+    add_configs("ubjson", {description = "Enable UBJSON Support.", default = true, type = "boolean"})
+    add_configs("xml", {description = "Enable Xml Support.", default = true, type = "boolean"})
+    add_configs("yaml", {description = "Enable Yaml Support.", default = true, type = "boolean"})
+    add_configs("yas", {description = "Enable yas Support.", default = false, type = "boolean", readonly = true})
+    add_configs("yyjson", {description = "Enable yyjson Support.", default = true, type = "boolean"})
+
     if is_plat("windows") then
         add_configs("shared", {description = "Build shared library.", default = false, type = "boolean", readonly = true})
     end
@@ -98,6 +105,17 @@ package("reflect-cpp")
             package:add("deps", "jsoncons")
         end
 
+        if package:config("boost_serialization") then
+            package:add("deps", "boost[serialization]")
+        end
+
+        if package:config("cereal") then
+            package:add("deps", "cereal")
+        end
+
+        if package:config("csv") then
+            package:add("deps", "arrow")
+        end
 
 
         local version = package:version()
@@ -138,8 +156,14 @@ package("reflect-cpp")
             table.insert(configs, "-DREFLECTCPP_TOML=" .. (package:config("toml") and "ON" or "OFF"))
             table.insert(configs, "-DREFLECTCPP_UBJSON=" .. (package:config("ubjson") and "ON" or "OFF"))
             table.insert(configs, "-DREFLECTCPP_YAML=" .. (package:config("yaml") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_AVRO=" .. (package:config("avro") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_BOOST_SERAILIZATION=" .. (package:config("boost-serialization") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_CEREAL=" .. (package:config("cereal") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_CSV=" .. (package:config("csv") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_PARQUET=" .. (package:config("parquet") and "ON" or "OFF"))
+            table.insert(configs, "-DREFLECTCPP_YAS=" .. (package:config("yas") and "ON" or "OFF"))
             import("package.tools.cmake").install(package, configs)
-        else 
+        else
             os.rm("include/thirdparty")
             os.cp("include", package:installdir())
         end
